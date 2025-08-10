@@ -76,7 +76,6 @@ The primary goal is to **accurately detect individuals with ASD**, with special 
   * Preprocesses new data (using saved encoders & median values)
   * Predicts ASD using **best model**.
 
----
 
 
 ## 📁 Files
@@ -86,7 +85,6 @@ The primary goal is to **accurately detect individuals with ASD**, with special 
 * **`encoder.pkl`** → Label Encoders for categorical features
 * **`train.csv`** → Dataset
 
----
 
 ## ▶ How to Run
 
@@ -95,4 +93,3 @@ The primary goal is to **accurately detect individuals with ASD**, with special 
 3. Run notebook cells sequentially.
 4. Use `predict_asd` function for new predictions.
 
----
