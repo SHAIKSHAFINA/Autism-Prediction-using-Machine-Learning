@@ -9,7 +9,7 @@ The primary goal is to **accurately detect individuals with ASD**, with special 
 
 ## 📂 Dataset
 
-* **File:** `/content/train.csv` (Colab path; can be uploaded or loaded from Google Drive)
+* **File:** `/content/train.csv` 
 * **Features:**
 
   * **Scoring Attributes:** `A1`–`A10`
@@ -89,7 +89,7 @@ The primary goal is to **accurately detect individuals with ASD**, with special 
 ## ▶ How to Run
 
 1. **Open in Google Colab** (or clone the repository locally).
-2. Ensure `train.csv` is available (upload or mount from Drive).
+2. Ensure `train.csv` is available.
 3. Run notebook cells sequentially.
 4. Use `predict_asd` function for new predictions.
 
