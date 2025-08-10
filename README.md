@@ -1,95 +1,42 @@
-# Autism-Prediction-using-Machine-Learning
+# Autism Prediction System (Full Stack)
 
+Full-stack application for ASD prediction using a pre-trained ML classifier.
 
-##  Overview
+## Structure
+- `/backend` — FastAPI service that loads `autism_model.pkl` and exposes `/predict`
+- `/frontend` — React + Vite + Tailwind UI
 
-This project focuses on building a **classification model** to predict **Autism Spectrum Disorder (ASD)** using a dataset containing various scores and demographic details.
-The primary goal is to **accurately detect individuals with ASD**, with special emphasis on improving detection rates for the **minority class (ASD cases)**.
+## Quick Start
+### Backend
+```bash
+cd backend
+python -m venv .venv
+source .venv/bin/activate  # Windows: .venv\\Scripts\\activate
+pip install --upgrade pip
+pip install -r requirements.txt
+# Place your model at backend/autism_model.pkl (or set MODEL_PATH)
+uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+```
 
+### Frontend
+```bash
+cd frontend
+npm install
+cp .env.example .env
+npm run dev
+```
+Open `http://localhost:5173` and ensure `VITE_API_URL` points to the backend (`http://localhost:8000`).
 
-## 📂 Dataset
+## API
+- `POST /predict` with JSON body (see `backend/README.md`)
 
-* **File:** `/content/train.csv` 
-* **Features:**
+## Integration Notes
+- CORS is enabled on the backend. For production, set `CORS_ORIGINS` to your frontend domain(s).
+- Frontend reads API base URL from `VITE_API_URL`.
 
-  * **Scoring Attributes:** `A1`–`A10`
-  * **Demographics:** `age`, `gender`, `ethnicity`, `country_of_residence`
-  * **Medical History:** `jaundice`, `family history of autism (austim)`
-  * **Other:** prior app usage, result score, relation to survey responder
-  * **Target:** `Class/ASD` (0 = No ASD, 1 = ASD)
+## Deployment
+- Backend: Render or Railway (see `backend/README.md`)
+- Frontend: Vercel or Netlify (see `frontend/README.md`)
 
-
-## 🔄 Methodology
-
-### 1️⃣ Data Loading & Understanding
-
-* Load dataset and inspect shape, data types, and missing values.
-
-### 2️⃣ Data Cleaning & Preparation
-
-* Handle missing/inconsistent values (`ethnicity`, `relation`) → group as `"Others"`.
-* Fix inconsistent country names.
-* Convert `age` to integer.
-* Drop irrelevant columns: `ID`, `age_desc`.
-
-### 3️⃣ Exploratory Data Analysis (EDA)
-
-* Visualize numerical & categorical features (histograms, box plots, count plots).
-* Identify outliers in `age` and `result`.
-* Analyze target variable distribution → found **class imbalance**.
-
-### 4️⃣ Outlier Handling
-
-* Replace outliers in `age` and `result` using **IQR method** and median replacement.
-
-### 5️⃣ Feature Encoding
-
-* Apply **Label Encoding** for categorical variables.
-
-### 6️⃣ Correlation Analysis
-
-* Plot correlation matrix to understand feature relationships.
-
-### 7️⃣ Train-Test Split
-
-* **80% training** | **20% testing**.
-
-### 8️⃣ Handling Class Imbalance
-
-* Apply **SMOTE (Synthetic Minority Oversampling Technique)** to training set.
-
-### 9️⃣ Model Training & Evaluation
-
-* Models used:
-
-  * Decision Tree
-  * Random Forest
-  * XGBoost
-  * Logistic Regression
-* **Hyperparameter tuning** with `RandomizedSearchCV`.
-* Compare performance based on **accuracy, precision, recall, and F1-score**.
-
-### 🔟 Predictive System
-
-* `predict_asd` function:
-
-  * Preprocesses new data (using saved encoders & median values)
-  * Predicts ASD using **best model**.
-
-
-
-## 📁 Files
-
-* **`ASD_Prediction.ipynb`** → Main Colab notebook (preprocessing, EDA, modeling, evaluation)
-* **`best_model.pkl`** → Saved Tuned Logistic Regression model
-* **`encoder.pkl`** → Label Encoders for categorical features
-* **`train.csv`** → Dataset
-
-
-## ▶ How to Run
-
-1. **Open in Google Colab** (or clone the repository locally).
-2. Ensure `train.csv` is available.
-3. Run notebook cells sequentially.
-4. Use `predict_asd` function for new predictions.
+After deployment, update the frontend env `VITE_API_URL` to the deployed backend URL and redeploy the frontend.
 
